@@ -43,7 +43,7 @@ class LightControl(threading.Thread):
         while not self._stopevent.isSet():
             if RPI:
                 self.dim.start(1)
-            value = breath.breath(intensity=self.intensity)
+            value = max(min(100, breath.breath(intensity=self.intensity)), 0)
             print '+' * int(value)
             if RPI:
                 self.dim.ChangeDutyCycle(value)
