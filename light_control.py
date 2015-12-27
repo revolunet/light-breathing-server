@@ -23,10 +23,12 @@ class LightControl(threading.Thread):
         self.delay = delay
 
         self._stopevent = threading.Event()
+
         if RPI:
             GPIO.setmode(GPIO.BOARD)
             GPIO.setup(power_led_pin, GPIO.OUT)
             self.dim = GPIO.PWM(power_led_pin, pwm_frequency)
+            self.dim.start(1)
 
     def stop(self):
         print "got stop"
