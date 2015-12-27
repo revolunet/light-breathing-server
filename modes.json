@@ -1,10 +1,26 @@
 {
-    "fast": {
+    "high-fast": {
         "intensity": 100,
         "delay": 0.005
     },
-    "slow": {
-        "intensity": 30,
+    "high-slow": {
+        "intensity": 100,
         "delay": 0.05
+    },
+    "high-xslow": {
+        "intensity": 10,
+        "delay": 0.1
+    },
+    "low-fast": {
+        "intensity": 10,
+        "delay": 0.005
+    },
+    "low-slow": {
+        "intensity": 10,
+        "delay": 0.05
+    },
+    "low-xslow": {
+        "intensity": 10,
+        "delay": 0.1
     }
 }

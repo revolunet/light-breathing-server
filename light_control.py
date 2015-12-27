@@ -10,7 +10,7 @@ import threading
 import breath
 
 DEFAULT_INTENSITY = 30
-DEFAULT_DELAY = 0.05
+DEFAULT_DELAY = 0.03
 
 class LightControl(threading.Thread):
 

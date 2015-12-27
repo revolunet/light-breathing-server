@@ -24,13 +24,22 @@ if __name__=='__main__':
 
     print "▶ use PIN %i at frequency %i" % (args.pin, args.frequency)
 
-    thread = LightControl(args.pin, args.frequency, **MODES['slow'])
+    thread = LightControl(args.pin, args.frequency, **MODES['low-xslow'])
 
     thread.start()
 
-    @route('/breath/:mode')
-    def update(mode):
-        print 'update', mode
+    # some default modes
+    @route('/breath/mode/:mode')
+    def mode(mode):
+        print 'update mode', mode
         thread.update(MODES[mode])
+
+    # custom settings
+    @route('/breath/<intensity:int>/<delay:float>')
+    def update(intensity, delay):
+        thread.update({
+            'intensity': intensity,
+            'delay': delay
+        })
 
     run(host='0.0.0.0', port=args.port)
