@@ -12,7 +12,7 @@ import breath
 DEFAULT_INTENSITY = 30
 DEFAULT_DELAY = 0.05
 
-class Dim(threading.Thread):
+class LightControl(threading.Thread):
 
     def __init__(self, power_led_pin, pwm_frequency, intensity=DEFAULT_INTENSITY, delay=DEFAULT_DELAY):
         threading.Thread.__init__(self)
@@ -50,7 +50,7 @@ class Dim(threading.Thread):
             time.sleep(self.delay)
 
 if __name__ == '__main__':
-    thread = Dim()
+    thread = LightControl()
     thread.start()
     while 1:
         try:

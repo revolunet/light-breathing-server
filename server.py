@@ -2,36 +2,35 @@
 # -*- encoding: UTF-8 -*-
 
 from bottle import route, run
+from light_control import LightControl
+import json
 
-from dim import Dim
+import argparse
 
-GPIO_LED_PIN = 18
-GPIO_FREQUENCY = 120
+DEFAULT_GPIO_LED_PIN = 18
+DEFAULT_GPIO_FREQUENCY = 120
+DEFAULT_PORT = 9200
 
-PORT = 9200
+parser = argparse.ArgumentParser(description='Make rPI light breath using GPIO')
+parser.add_argument('--port', type=int, default=DEFAULT_PORT, help='HTTP API listening port')
+parser.add_argument('--pin', type=int, default=DEFAULT_GPIO_LED_PIN, help='GPIO LED pin')
+parser.add_argument('--frequency', type=int, default=DEFAULT_GPIO_FREQUENCY, help='GPIO frequency')
 
-MODES = {
-    'fast': {
-        'intensity': 100,
-        'delay': 0.005
-    },
-    'slow': {
-        'intensity': 30,
-        'delay': 0.05
-    }
-}
+MODES = json.load(open('./modes.json', 'r'))
 
 if __name__=='__main__':
 
-    thread = Dim(GPIO_LED_PIN, GPIO_FREQUENCY, **MODES['slow'])
+    args = parser.parse_args()
+
+    print "▶ use PIN %i at frequency %i" % (args.pin, args.frequency)
+
+    thread = LightControl(args.pin, args.frequency, **MODES['slow'])
+
     thread.start()
 
-    @route('/fast')
-    def fast():
-        thread.update(MODES['fast'])
+    @route('/breath/:mode')
+    def update(mode):
+        print 'update', mode
+        thread.update(MODES[mode])
 
-    @route('/slow')
-    def slow():
-        thread.update(MODES['slow'])
-
-    run(host='0.0.0.0', port=PORT)
+    run(host='0.0.0.0', port=args.port)

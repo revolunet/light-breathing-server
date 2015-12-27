@@ -1,0 +1,10 @@
+{
+    "fast": {
+        "intensity": 100,
+        "delay": 0.005
+    },
+    "slow": {
+        "intensity": 30,
+        "delay": 0.05
+    }
+}
