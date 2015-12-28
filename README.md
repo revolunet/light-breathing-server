@@ -37,7 +37,16 @@ Then use API on `http://127.0.0.1:9200`
 
 add this to `/etc/rc.local` :
 
-`cd /root/prizoners/light-breathing-server && python server.py --pin 12`
+```sh
+#!/bin/sh -e
+
+# start server.py in a dedicated screen session
+
+
+cd /path/to/light-breathing-server && screen -dmS breath ./server.py --pin 12 --intensity 3 --delay 0.05
+
+exit 0
+```
 
 Recommended rPI distribs for rock solid setups : http://nutcom.hu/ipe
 
