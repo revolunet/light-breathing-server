@@ -18,6 +18,8 @@ class LightControl(threading.Thread):
         threading.Thread.__init__(self)
         self.daemon = True
 
+        self.power_led_pin = power_led_pin
+
         self.step = 1
         self.intensity = intensity
         self.delay = delay
@@ -37,19 +39,33 @@ class LightControl(threading.Thread):
             self.dim.stop()
             GPIO.cleanup()
 
+    def on(self):
+        self._stopevent.clear()
+        if RPI:
+            GPIO.output(self.power_led_pin, True)
+            self.dim.start(1)
+
+    def off(self):
+        self._stopevent.set()
+        if RPI:
+            self.dim.stop()
+            GPIO.output(self.power_led_pin, False)
+
     def update(self, params):
+        self.on()
         for attr, value in params.items():
             setattr(self, attr, value)
 
     def run(self):
-        while not self._stopevent.isSet():
-            if RPI:
-                self.dim.start(1)
-            value = max(min(100, breath.breath(intensity=self.intensity)), 0)
-            print '+' * int(value)
-            if RPI:
-                self.dim.ChangeDutyCycle(value)
-            time.sleep(self.delay)
+        while 1:
+            if not self._stopevent.isSet():
+                if RPI:
+                    self.dim.start(1)
+                value = max(min(100, breath.breath(intensity=self.intensity)), 0)
+                print '+' * int(value)
+                if RPI:
+                    self.dim.ChangeDutyCycle(value)
+                time.sleep(self.delay)
 
 if __name__ == '__main__':
     thread = LightControl()

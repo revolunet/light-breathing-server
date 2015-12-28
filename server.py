@@ -32,6 +32,14 @@ if __name__=='__main__':
 
     thread.start()
 
+    @route('/on')
+    def mode():
+        thread.on()
+
+    @route('/off')
+    def mode():
+        thread.off()
+
     # some default modes
     @route('/breath/mode/:mode')
     def mode(mode):

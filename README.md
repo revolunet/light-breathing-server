@@ -53,6 +53,8 @@ Recommended rPI distribs for rock solid setups : http://nutcom.hu/ipe
 ## API
 
  - `/breath/80/0.01` : breath at 80% max intensity with a 0.01s refresh delay
+ - `on`: power on the LED
+ - `off`: power off the LED
 
 #### Some pre-defined setings:
 
