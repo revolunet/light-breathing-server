@@ -9,6 +9,8 @@ def breath(intensity=1, time_offset=0, duration=1.0, minimum=0, add_randomness=F
     if add_randomness:
         # add some randomness
         value *= (1 + random.random() / 50)
+    if value < 1.5:
+        value = 2
     return value
 
 

@@ -22,13 +22,13 @@ Make rPI light breath using GPIO
 
 optional arguments:
   -h, --help            show this help message and exit
-  --port PORT           HTTP API listening port
+  --port PORT           HTTP API listening port (default 9200)
   --pin PIN             GPIO LED pin
   --frequency FREQUENCY
                         GPIO frequency
   --intensity INTENSITY
-                        Max breath intensity
-  --delay DELAY         Breath refresh delay in seconds
+                        Max breath intensity (default 30)
+  --delay DELAY         Breath refresh delay in seconds (default 0.03)
 ```
 
 Then use API on `http://127.0.0.1:9200` 
@@ -43,7 +43,7 @@ add this to `/etc/rc.local` :
 # start server.py in a dedicated screen session
 
 
-cd /path/to/light-breathing-server && screen -dmS breath ./server.py --pin 12 --intensity 3 --delay 0.05
+cd /path/to/light-breathing-server && screen -dmS breath ./server.py --pin 7 --intensity 5 --delay 0.05
 
 exit 0
 ```
